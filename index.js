@@ -6,10 +6,23 @@ const { Server } = require('socket.io')
 const io = new Server(server)
 const CONFIG = require('./config')
 const mongoose = require('mongoose')
+const home = require('./routes/home')
+const bodyParser = require('body-parser')
+const sessions = require('express-session')
 
-app.get('/', (req, res) => {
-    res.sendFile(__dirname + '/views/index.html');
-});
+/**using pkg */
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: false }))
+const oneDay = 1000 * 60 * 60 * 24;
+app.use(sessions({
+    secret: "chatsocketio",
+    saveUninitialized: true,
+    cookie: { maxAge: oneDay },
+    resave: false
+}))
+
+/**Route */
+app.use('/', home)
 
 /**Socket IO */
 io.on('connection', (socket) => {
