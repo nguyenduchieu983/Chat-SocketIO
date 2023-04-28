@@ -8,7 +8,7 @@ const CONFIG = require('./config')
 const mongoose = require('mongoose')
 
 app.get('/', (req, res) => {
-    res.sendFile(__dirname + '/index.html');
+    res.sendFile(__dirname + '/views/index.html');
 });
 
 /**Socket IO */
